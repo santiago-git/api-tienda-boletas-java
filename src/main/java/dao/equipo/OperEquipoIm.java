@@ -13,152 +13,152 @@ import java.util.ArrayList;
 
 public class OperEquipoIm implements OperEquipo {
 
-	@Override
-	public int insertar(Equipo dtoE) {
-		Conector con = new Conector();
-		Connection cn = con.conectar();
+    @Override
+    public int insertar(Equipo dtoE) {
+        Conector con = new Conector();
+        Connection cn = con.conectar();
 
-		if (cn != null) {
+        if (cn != null) {
 
-			try {
-				PreparedStatement ps = cn.prepareStatement("insert into equipos (nombre) values (?)");
+            try {
+                PreparedStatement ps = cn.prepareStatement("insert into equipos (nombre) values (?)");
 
-				ps.setString(1, dtoE.getNombre());
+                ps.setString(1, dtoE.getNombre());
 
-				int valor = ps.executeUpdate();
+                int valor = ps.executeUpdate();
 
-				return valor;
+                return valor;
 
-			} catch (SQLException ex) {
-				Logger.getLogger(OperEquipoIm.class.getName()).log(Level.SEVERE, null, ex);
-			} finally {
-				con.desconectar(cn);
-			}
+            } catch (SQLException ex) {
+                Logger.getLogger(OperEquipoIm.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                con.desconectar(cn);
+            }
 
-		}
+        }
 
-		return 0;
-	}
+        return 0;
+    }
 
-	@Override
-	public int modificar(Equipo dtoE) {
-		Conector con = new Conector();
-		Connection cn = con.conectar();
+    @Override
+    public int modificar(Equipo dtoE) {
+        Conector con = new Conector();
+        Connection cn = con.conectar();
 
-		if (cn != null) {
+        if (cn != null) {
 
-			try {
-				PreparedStatement ps = cn.prepareStatement("update equipos set nombre = ? where id = ?");
-				// ps.setString(1, "Equipos");
-				ps.setLong(2, dtoE.getId());
-				ps.setString(1, dtoE.getNombre());
+            try {
+                PreparedStatement ps = cn.prepareStatement("update equipos set nombre = ? where id = ?");
+                // ps.setString(1, "Equipos");
+                ps.setLong(2, dtoE.getId());
+                ps.setString(1, dtoE.getNombre());
 
-				int valor = ps.executeUpdate();
+                int valor = ps.executeUpdate();
 
-				return valor;
+                return valor;
 
-			} catch (SQLException ex) {
-				Logger.getLogger(OperEquipoIm.class.getName()).log(Level.SEVERE, null, ex);
-			} finally {
-				con.desconectar(cn);
-			}
+            } catch (SQLException ex) {
+                Logger.getLogger(OperEquipoIm.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                con.desconectar(cn);
+            }
 
-		}
-		return 0;
-	}
+        }
+        return 0;
+    }
 
-	@Override
-	public int eliminar(Equipo dtoE) {
-		Conector con = new Conector();
-		Connection cn = con.conectar();
+    @Override
+    public int eliminar(Equipo dtoE) {
+        Conector con = new Conector();
+        Connection cn = con.conectar();
 
-		if (cn != null) {
+        if (cn != null) {
 
-			try {
-				PreparedStatement ps = cn.prepareStatement("delete from equipos where id = ?");
-				ps.setLong(1, dtoE.getId());
+            try {
+                PreparedStatement ps = cn.prepareStatement("delete from equipos where id = ?");
+                ps.setLong(1, dtoE.getId());
 
-				int valor = ps.executeUpdate();
+                int valor = ps.executeUpdate();
 
-				return valor;
+                return valor;
 
-			} catch (SQLException ex) {
-				Logger.getLogger(OperEquipoIm.class.getName()).log(Level.SEVERE, null, ex);
-			} finally {
-				con.desconectar(cn);
-			}
+            } catch (SQLException ex) {
+                Logger.getLogger(OperEquipoIm.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                con.desconectar(cn);
+            }
 
-		}
-		return 0;
-	}
+        }
+        return 0;
+    }
 
-	@Override
-	public List<Equipo> consultar() {
-		Conector con = new Conector();
-		Connection cn = con.conectar();
-		if (cn != null) {
-			try {
-				PreparedStatement ps = cn.prepareStatement("select * from equipos");
+    @Override
+    public List<Equipo> consultar() {
+        Conector con = new Conector();
+        Connection cn = con.conectar();
+        if (cn != null) {
+            try {
+                PreparedStatement ps = cn.prepareStatement("select * from equipos");
 
-				ResultSet rs = ps.executeQuery();
+                ResultSet rs = ps.executeQuery();
 
-				List<Equipo> lista = new ArrayList<Equipo>();
+                List<Equipo> lista = new ArrayList<Equipo>();
 
-				while (rs.next()) {
-					int id = rs.getInt("id");
-					String nombre = rs.getString("nombre");
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String nombre = rs.getString("nombre");
 
-					Equipo e = new Equipo();
+                    Equipo e = new Equipo();
 
-					e.setId(id);
-					e.setNombre(nombre);
-					lista.add(e);
-				}
+                    e.setId(id);
+                    e.setNombre(nombre);
+                    lista.add(e);
+                }
 
-				return lista;
+                return lista;
 
-			} catch (SQLException ex) {
-				Logger.getLogger(OperEquipoIm.class.getName()).log(Level.SEVERE, null, ex);
-			} finally {
-				con.desconectar(cn);
-			}
-		}
-		return null;
-	}
+            } catch (SQLException ex) {
+                Logger.getLogger(OperEquipoIm.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                con.desconectar(cn);
+            }
+        }
+        return null;
+    }
 
-	@Override
-	public Equipo consultar(long pk) {
+    @Override
+    public Equipo consultar(long pk) {
 
-		Conector con = new Conector();
-		Connection cn = con.conectar();
+        Conector con = new Conector();
+        Connection cn = con.conectar();
 
-		if (cn != null) {
+        if (cn != null) {
 
-			try {
-				PreparedStatement ps = cn.prepareStatement("select * from equipos where id = ?");
-				ps.setLong(1, pk);
+            try {
+                PreparedStatement ps = cn.prepareStatement("select * from equipos where id = ?");
+                ps.setLong(1, pk);
 
-				ResultSet rs = ps.executeQuery();
+                ResultSet rs = ps.executeQuery();
 
-				if (rs.next()) {
-					int id = rs.getInt("id");
-					String nombre = rs.getString("nombre");
+                if (rs.next()) {
+                    int id = rs.getInt("id");
+                    String nombre = rs.getString("nombre");
 
-					Equipo e = new Equipo();
+                    Equipo e = new Equipo();
 
-					e.setId(id);
-					e.setNombre(nombre);
-					return e;
-				}
+                    e.setId(id);
+                    e.setNombre(nombre);
+                    return e;
+                }
 
-			} catch (SQLException ex) {
-				Logger.getLogger(OperEquipoIm.class.getName()).log(Level.SEVERE, null, ex);
-			} finally {
-				con.desconectar(cn);
-			}
+            } catch (SQLException ex) {
+                Logger.getLogger(OperEquipoIm.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                con.desconectar(cn);
+            }
 
-		}
-		return null;
-	}
+        }
+        return null;
+    }
 
 }
